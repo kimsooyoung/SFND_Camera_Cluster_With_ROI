@@ -154,7 +154,7 @@ int main()
         {
             showLidarTopview(it->lidarPoints, cv::Size(10.0, 25.0), cv::Size(1000, 2000));
         }
-    }   
+    }
 
     return 0;
 }
