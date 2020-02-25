@@ -61,10 +61,26 @@ void showLidarTopview(std::vector<LidarPoint> &lidarPoints, cv::Size worldSize, 
         cv::line(topviewImg, cv::Point(0, y), cv::Point(imageSize.width, y), cv::Scalar(255, 0, 0));
     }
 
+    double angle = -90;
+
+    // get rotation matrix for rotating the image around its center in pixel coordinates
+    cv::Point2f center((topviewImg.cols-1)/2.0, (topviewImg.rows-1)/2.0);
+    cv::Mat rot = cv::getRotationMatrix2D(center, angle, 1.0);
+    // determine bounding rectangle, center not relevant
+    cv::Rect2f bbox = cv::RotatedRect(cv::Point2f(), topviewImg.size(), angle).boundingRect2f();
+    // adjust transformation matrix
+    rot.at<double>(0,2) += bbox.width/2.0 - topviewImg.cols/2.0;
+    rot.at<double>(1,2) += bbox.height/2.0 - topviewImg.rows/2.0;
+
     // display image
+    cv::Mat dst;
+    cv::warpAffine(topviewImg, dst, rot, bbox.size());
     string windowName = "Top-View Perspective of LiDAR data";
-    cv::namedWindow(windowName, 2);
-    cv::imshow(windowName, topviewImg);
+    cv::resize(dst, dst, cv::Size(dst.cols/2, dst.rows/2));
+
+    // display image
+    cv::namedWindow(windowName, 6);
+    cv::imshow(windowName, dst);
     cv::waitKey(0); // wait for key to be pressed
 }
 
@@ -109,12 +125,16 @@ void clusterLidarWithROI(std::vector<BoundingBox> &boundingBoxes, std::vector<Li
             // check wether point is within current bounding box
             if (smallerBox.contains(pt))
             {
-                it2->lidarPoints.push_back(*it1);
-                lidarPoints.erase(it1);
-                it1--;
-                break;
+                enclosingBoxes.push_back(it2);
+                // it2->lidarPoints.push_back(*it1);
+                // lidarPoints.erase(it1);
+                // it1--;
+                // break;
             }
         } // eof loop over all bounding boxes
+        if(enclosingBoxes.size() == 1){
+            enclosingBoxes[0]->lidarPoints.push_back(*it1);
+        }
 
     } // eof loop over all Lidar points
 }
