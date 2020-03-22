@@ -2,11 +2,13 @@
 
 Construct Bounding-Boxes around Clound points that represents same objects and then show those clustered cloud points on a top-view.
 
-<img width="999" alt="cluster_with_roi" src="https://user-images.githubusercontent.com/12381733/77242694-6964a180-6c44-11ea-8c74-1d1110b688ac.png">
 
 ### Project Status:
 
 ![issue_badge](https://img.shields.io/badge/build-Passing-green) ![issue_badge](https://img.shields.io/badge/UdacityRubric-Passing-green)
+
+<img width="999" alt="cluster_with_roi" src="https://user-images.githubusercontent.com/12381733/77242694-6964a180-6c44-11ea-8c74-1d1110b688ac.png">
+
 
 ## Dependencies for Running Locally
 * cmake >= 2.8
