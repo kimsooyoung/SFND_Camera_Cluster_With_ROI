@@ -25,7 +25,7 @@ Construct Bounding-Boxes around Clound points that represents same objects and t
 
 ## Project Overview
 
-### Most of functions in this projects are also used in this project, see more detail at there.
+_Most of functions in this projects are also used in this project, see more detail at there._
 
 * [SFND_Camera_Lidar_To_Camera](https://github.com/kimsooyoung/SFND_Camera_Lidar_To_Camera)
 
